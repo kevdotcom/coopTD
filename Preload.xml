@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Preload>
+<Actor id="SYSTEM_ActorConfig"/>
+<Terrain id="Tyrador"/>
+<Unit id="Barracks"/>
+<Unit id="SensorTower"/>
+<Unit id="Pylon"/>
+<Unit id="DarkShrine"/>
+<Unit id="Spire"/>
+<Unit id="BanelingNest"/>
+<Unit id="SpineCrawler"/>
+<Unit id="SporeCrawler"/>
+<Unit id="GreaterSpire"/>
+<Unit id="Probe2"/>
+</Preload>

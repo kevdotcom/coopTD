@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PlacedObjects Version="27">
+    <ObjectUnit Id="79220896" Position="9,68,0" Scale="1,1,1" UnitType="DarkShrine" Player="1"/>
+    <ObjectUnit Id="558939576" Position="15.5,76.5,0" Rotation="5.4975" Scale="1,1,1" UnitType="Barracks" Player="3"/>
+    <ObjectUnit Id="786500634" Position="34,68,0" Rotation="5.4975" Scale="1,1,1" UnitType="Spire" Player="1"/>
+    <ObjectUnit Id="542129786" Position="12,68,0" Scale="1,1,1" UnitType="Pylon" Player="1"/>
+    <ObjectUnit Id="1236014902" Position="26,68,0" Rotation="5.9338" Scale="1,1,1" UnitType="GreaterSpire" Player="1"/>
+    <ObjectUnit Id="2038337683" Position="3.5,76.5,0" Rotation="5.4975" Scale="1,1,1" UnitType="Barracks" Player="1"/>
+    <ObjectUnit Id="2143048091" Position="38,68,0" Rotation="3.0573" Scale="1,1,1" UnitType="SporeCrawler" Player="1"/>
+    <ObjectUnit Id="313873400" Position="30,68,0" Rotation="5.2895" Scale="1,1,1" UnitType="SpineCrawler" Player="1"/>
+    <ObjectUnit Id="884110717" Position="20.2512,75.86,0" Rotation="1.2978" Scale="1,1,1" UnitType="Probe2" Player="4"/>
+    <ObjectUnit Id="1533578500" Position="14.435,75.9553,0" Rotation="5.8645" Scale="1,1,1" UnitType="Probe2" Player="3"/>
+    <ObjectUnit Id="1677868032" Position="9.5,76.5,0" Rotation="5.4975" Scale="1,1,1" UnitType="Barracks" Player="2"/>
+    <ObjectUnit Id="1298694980" Position="21.5,76.5,0" Rotation="5.4975" Scale="1,1,1" UnitType="Barracks" Player="4"/>
+    <ObjectUnit Id="1416847629" Position="8.4291,75.798,0" Rotation="1.7424" Scale="1,1,1" UnitType="Probe2" Player="2"/>
+    <ObjectUnit Id="1882930616" Position="21.5,68.5,0" Rotation="5.4975" Scale="1,1,1" UnitType="BanelingNest" Player="1"/>
+    <ObjectUnit Id="1616536259" Position="14.5,67.5,0" Rotation="5.4975" Scale="1,1,1" UnitType="SensorTower" Player="1"/>
+    <ObjectUnit Id="221348819" Position="3.5678,73.4865,0" Rotation="4.6584" Scale="1,1,1" UnitType="Probe2" Player="1"/>
+    <ObjectPoint Id="2079031158" Position="21.5,76.5,0" Scale="1,1,1" Type="StartLoc" Name="Start Location 004" Color="0,0,0,0"/>
+    <ObjectPoint Id="250857995" Position="15.5,76.5,0" Scale="1,1,1" Type="StartLoc" Name="Start Location 003" Color="0,0,0,0"/>
+    <ObjectPoint Id="1735803752" Position="9.5,76.5,0" Scale="1,1,1" Type="StartLoc" Name="Start Location 002" Color="0,0,0,0"/>
+    <ObjectPoint Id="2075721955" Position="78.5,68.5,0" Scale="1,1,1" Type="StartLoc" Name="Start Location 005" Color="0,0,0,0"/>
+    <ObjectPoint Id="2065742687" Position="3.5,76.5,0" Scale="1,1,1" Type="StartLoc" Name="Start Location 001" Color="0,0,0,0"/>
+</PlacedObjects>

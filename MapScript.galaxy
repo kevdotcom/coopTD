@@ -1,0 +1,212 @@
+//==================================================================================================
+// 
+// Generated Map Script
+// 
+// Name:   NLK Defense
+// 
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Global Variables
+//--------------------------------------------------------------------------------------------------
+int gv_player1Kills;
+bool gv_waveRunning;
+int gv_currentWaveNumber;
+int gv_timeUntilWave;
+int gv_leaderboard;
+string[5] gv_waveTypes;
+
+void InitGlobals () {
+    gv_leaderboard = c_boardNone;
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Variables
+//--------------------------------------------------------------------------------------------------
+trigger gt_Init;
+trigger gt_LeaderboardUpdate;
+trigger gt_UnitDies;
+trigger gt_LosingCondition;
+trigger gt_SpawnWave;
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Init
+//--------------------------------------------------------------------------------------------------
+bool gt_Init_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gv_timeUntilWave = 30;
+    BoardCreate(2, 3, StringExternal("Param/Value/FFF70665"), Color(100.00, 100.00, 100.00));
+    gv_leaderboard = BoardLastCreated();
+    BoardShowAll(true, PlayerGroupAll());
+    BoardItemSetText(BoardLastCreated(), 1, 1, PlayerName(1));
+    BoardItemSetText(BoardLastCreated(), 2, 1, StringExternal("Param/Value/368C6B98"));
+    BoardItemSetTextColor(BoardLastCreated(), 1, 1, libNtve_gf_ConvertPlayerColorToColor(PlayerGetColorIndex(1, false)));
+    VisRevealerCreate(1, RegionEntireMap());
+    VisRevealerCreate(2, RegionEntireMap());
+    VisRevealerCreate(3, RegionEntireMap());
+    VisRevealerCreate(4, RegionEntireMap());
+    CameraPan(1, UnitGetPosition(UnitFromId(221348819)), 0.0, 100.0, 0.0, false);
+    PlayerModifyPropertyInt(1, c_playerPropMinerals, c_playerPropOperSetTo, 5);
+    gv_waveTypes[0] = "Drone";
+    gv_waveTypes[1] = "Zergling";
+    gv_waveTypes[2] = "Hydralisk";
+    gv_waveTypes[3] = "Roach";
+    gv_waveTypes[4] = "Ultralisk";
+    Wait(gv_timeUntilWave, c_timeGame);
+    TriggerExecute(gt_SpawnWave, false, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_Init_Init () {
+    gt_Init = TriggerCreate("gt_Init_Func");
+    TriggerAddEventMapInit(gt_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Leaderboard Update
+//--------------------------------------------------------------------------------------------------
+bool gt_LeaderboardUpdate_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((gv_waveRunning == false)) {
+        gv_timeUntilWave -= 1;
+        BoardSetName(gv_leaderboard, (StringExternal("Param/Value/07922297") + IntToText(gv_timeUntilWave)), Color(100.00, 100.00, 100.00));
+    }
+    else {
+        BoardSetName(gv_leaderboard, (StringExternal("Param/Value/B5F2DAF0") + IntToText((gv_currentWaveNumber + 1))), Color(100.00, 100.00, 100.00));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_LeaderboardUpdate_Init () {
+    gt_LeaderboardUpdate = TriggerCreate("gt_LeaderboardUpdate_Func");
+    TriggerAddEventTimePeriodic(gt_LeaderboardUpdate, 1.0, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Unit Dies
+//--------------------------------------------------------------------------------------------------
+bool gt_UnitDies_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitGetOwner(EventUnit()) == 10))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TextTagCreate(StringExternal("Param/Value/79E844B4"), 24, UnitGetPosition(EventUnit()), 1.0, true, false, PlayerGroupAll());
+    TextTagSetTime(TextTagLastCreated(), c_textTagTimeDuration, 3.0);
+    PlayerModifyPropertyInt(libNtve_gf_KillingPlayer(), c_playerPropMinerals, c_playerPropOperAdd, 1);
+    gv_player1Kills += 1;
+    BoardItemSetText(BoardLastCreated(), 2, 1, IntToText(gv_player1Kills));
+    if ((UnitGroupCount(UnitGroup(null, 10, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), c_unitCountAlive) == 0)) {
+        PlayerModifyPropertyInt(1, c_playerPropMinerals, c_playerPropOperAdd, ((gv_currentWaveNumber + 1) * 100));
+        TriggerExecute(gt_SpawnWave, false, false);
+        gv_timeUntilWave = 15;
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UnitDies_Init () {
+    gt_UnitDies = TriggerCreate("gt_UnitDies_Func");
+    TriggerAddEventUnitDied(gt_UnitDies, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Losing Condition
+//--------------------------------------------------------------------------------------------------
+bool gt_LosingCondition_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitGetOwner(EventUnit()) == 10))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    GameOver(1, c_gameOverDefeat, true, true);
+    GameOver(2, c_gameOverDefeat, true, true);
+    GameOver(3, c_gameOverDefeat, true, true);
+    GameOver(4, c_gameOverDefeat, true, true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_LosingCondition_Init () {
+    gt_LosingCondition = TriggerCreate("gt_LosingCondition_Func");
+    TriggerAddEventUnitRegion(gt_LosingCondition, null, RegionFromId(2), true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Spawn Wave
+//--------------------------------------------------------------------------------------------------
+bool gt_SpawnWave_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UnitCreate(5, gv_waveTypes[gv_currentWaveNumber], 0, 10, RegionGetCenter(RegionFromId(1)), 90.0);
+    UnitGroupIssueOrder(UnitLastCreatedGroup(), OrderTargetingPoint(AbilityCommand("move", 0), RegionGetCenter(RegionFromId(2))), c_orderQueueReplace);
+    gv_currentWaveNumber += 1;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_SpawnWave_Init () {
+    gt_SpawnWave = TriggerCreate("gt_SpawnWave_Func");
+    TriggerEnable(gt_SpawnWave, false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Initialization
+//--------------------------------------------------------------------------------------------------
+void InitTriggers () {
+    gt_Init_Init();
+    gt_LeaderboardUpdate_Init();
+    gt_UnitDies_Init();
+    gt_LosingCondition_Init();
+    gt_SpawnWave_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Map Initialization
+//--------------------------------------------------------------------------------------------------
+void InitMap () {
+    InitLibs();
+    InitGlobals();
+    InitTriggers();
+}

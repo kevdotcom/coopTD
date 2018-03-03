@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Regions>
+    <region id="1">
+        <name value="SpawnRegion"/>
+        <shape type="rect">
+            <quad value="0.2211,60.1733,3.7211,63.673"/>
+        </shape>
+    </region>
+    <region id="2">
+        <name value="EndRegion"/>
+        <color value="255,255,0,0"/>
+        <shape type="rect">
+            <quad value="75.7436,59.886,80.2436,64.386"/>
+        </shape>
+    </region>
+</Regions>
